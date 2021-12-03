@@ -1,1 +1,3 @@
-# AdventOfCode2021
+# Advent of Code 2021
+
+My solutions to Advent of Code 2020 written in Haskell.
