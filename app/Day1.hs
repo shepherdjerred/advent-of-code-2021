@@ -1,5 +1,11 @@
 module Main where
 
+listToSumWindow :: Int -> [Int] -> [Int]
+listToSumWindow windowSize list
+  | (length list) > windowSize = (listToSumWindow windowSize (take windowSize list)) ++ (listToSumWindow windowSize (tail list))
+  | (length list) == windowSize = [sum list]
+  | otherwise = []
+
 didIncrease :: Int -> Int -> Int
 didIncrease prev current
   | current > prev = 1
@@ -18,5 +24,5 @@ main :: IO ()
 main = do
   text <- readFile "resources/Day1.txt"
   let xs = fmap readInt $ lines text
-  print (countIncreases xs)
+  print (countIncreases (listToSumWindow 3 xs))
   
