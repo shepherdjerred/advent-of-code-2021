@@ -1,0 +1,15 @@
+on: [push]
+name: Haskell
+jobs:
+  haskell:
+    name: Build Haskell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: haskell/actions/setup@v1
+        with:
+          ghc-version: '9.2.1'
+          cabal-version: 'latest'
+          enable-stack: true
+          stack-version: 'latest'
+      - run: stack build
