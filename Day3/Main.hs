@@ -8,11 +8,17 @@ binaryToListOfDigits str = map (read . (:"")) str
 
 -- Determines the most frequent bit, e.g. 100 -> 75 -> 1, 100 -> 30 -> 0
 mostFrequentBit :: Int -> Int -> Int
-mostFrequentBit numberOfBits numberOfHighBits
+mostFrequentBit = mostFrequentBit' undefined
+
+mostFrequentBit' :: Int -> Int -> Int -> Int
+mostFrequentBit' favor numberOfBits numberOfHighBits
   | numberOfLowBits < numberOfHighBits = 1
   | numberOfLowBits > numberOfHighBits = 0
-  | otherwise = undefined
+  | otherwise = favor
   where numberOfLowBits = numberOfBits - numberOfHighBits
+
+leastFrequentBit :: Int -> Int -> Int -> Int
+leastFrequentBit favor numberOfBits numberOfHighBits = (invertBit (mostFrequentBit' favor numberOfBits numberOfHighBits))
 
 invertBit :: Int -> Int
 invertBit bit
@@ -22,11 +28,26 @@ invertBit bit
 
 -- Converts a binary number into its decimal representation, e.g. [1, 0, 0] -> 4
 binaryToDecimal:: [Int] -> Int
-binaryToDecimal i = binaryToDecimal' 0 i
+binaryToDecimal = binaryToDecimal' 0
 
 binaryToDecimal' :: Int -> [Int] -> Int
 binaryToDecimal' place [] = 0
 binaryToDecimal' place list = ((2 ^ place) * (last list)) + (binaryToDecimal' (place + 1) (init list))
+
+matches :: Int -> [Int] -> [[Int]] -> [[Int]]
+matches position desired candidates = filter (\x -> ((x!!position) == (desired!!position))) candidates
+
+closestMatch' :: Int -> (Int -> Int -> Int) -> [[Int]] -> [Int]
+closestMatch' position mapFn candidates
+  | (length currentMatches) == 1 = head currentMatches
+  | otherwise = closestMatch' (position + 1) mapFn currentMatches
+  where currentMatches = matches position desired candidates
+        desired = fmap (mapFn (length candidates)) counts
+        counts = fmap sum columns
+        columns = transpose candidates
+
+closestMatch :: (Int -> Int -> Int) -> [[Int]] -> [Int]
+closestMatch = closestMatch' 0
 
 main :: IO ()
 main = do
@@ -34,8 +55,12 @@ main = do
   let values = fmap binaryToListOfDigits $ lines text
   let columns = transpose values
   let counts = fmap sum columns
+  print(counts)
   let mostCommonBits = fmap (mostFrequentBit (length values)) counts
   let leastCommonBits = fmap invertBit mostCommonBits
   let gamma = binaryToDecimal mostCommonBits
   let epsilon = binaryToDecimal leastCommonBits
-  print("Power Consumption: " ++ gamma * epsilon)
+  print("Power Consumption: " ++ (show (gamma * epsilon)))
+  let ox = binaryToDecimal (closestMatch (mostFrequentBit' 1) values)
+  let co2 = binaryToDecimal (closestMatch (leastFrequentBit 1) values)
+  print("Life Support Rating: " ++ (show (ox * co2)))
