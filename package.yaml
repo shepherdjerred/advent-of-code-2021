@@ -31,3 +31,6 @@ executables:
   Day2:
     main: main.hs
     source-dirs: Day2
+  Day3:
+    main: main.hs
+    source-dirs: Day3
