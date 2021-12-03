@@ -9,7 +9,7 @@ jobs:
       - uses: haskell/actions/setup@v1
         with:
           ghc-version: '9.2.1'
-          cabal-version: 'latest'
+          cabal-version: '3.6.0.0'
           enable-stack: true
-          stack-version: 'latest'
+          stack-version: '2.7.3'
       - run: stack build
