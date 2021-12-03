@@ -28,10 +28,6 @@ executables:
   Day1:
     main: main.hs
     source-dirs: Day1
-    dependencies:
-      - AdventOfCode2021
   Day2:
     main: main.hs
     source-dirs: Day2
-    dependencies:
-      - AdventOfCode2021
