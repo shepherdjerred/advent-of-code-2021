@@ -1,0 +1,36 @@
+name: AdventOfCode2021
+version: 0.1.0.0
+github: "shepherdjerred/advent-of-code-2021"
+license: "GPL-3.0"
+author: "Jerred Shepherd"
+maintainer: "shepherdjerred@gmail.com"
+copyright: "2021 Jerred Shepherd"
+
+extra-source-files:
+  - README.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description: My solutions to Advent of Code 2021
+
+dependencies:
+  - base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  Day1-exe:
+    main: Day1.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - AdventOfCode2021
