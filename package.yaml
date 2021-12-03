@@ -25,12 +25,13 @@ library:
   source-dirs: src
 
 executables:
-  Day1-exe:
-    main: Day1.hs
-    source-dirs: app
-    ghc-options:
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
+  Day1:
+    main: main.hs
+    source-dirs: Day1
+    dependencies:
+      - AdventOfCode2021
+  Day2:
+    main: main.hs
+    source-dirs: Day2
     dependencies:
       - AdventOfCode2021

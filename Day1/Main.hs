@@ -13,7 +13,6 @@ didIncrease prev current
 
 countIncreases :: [Int] -> Int
 countIncreases (x:y:rest) = (didIncrease x y) + (countIncreases ([y] ++ rest))
-countIncreases [x, y] = didIncrease x y
 countIncreases [x] = 0
 countIncreases [] = 0
 
