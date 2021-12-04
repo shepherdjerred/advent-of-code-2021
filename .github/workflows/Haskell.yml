@@ -2,6 +2,12 @@ on: [push]
 name: Haskell
 jobs:
   haskell:
+    strategy:
+      matrix:
+        day:
+          - Day1
+          - Day2
+          - Day3
     name: Build Haskell
     runs-on: ubuntu-latest
     steps:
@@ -13,3 +19,7 @@ jobs:
           enable-stack: true
           stack-version: "2.7.3"
       - run: stack build
+      - name: run ${{ matrix.day }}
+        run: stack run ${{ matrix.day }}
+        
+        
