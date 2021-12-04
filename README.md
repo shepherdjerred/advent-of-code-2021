@@ -5,3 +5,5 @@
 [![Advent of Code Banner](./advent-of-code.jpg)](https://adventofcode.com/2021)
 
 My solutions to Advent of Code 2021 written in Haskell.
+
+##
