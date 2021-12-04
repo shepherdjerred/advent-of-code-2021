@@ -59,7 +59,7 @@ main = do
   let mostCommonBits = fmap (mostFrequentBit undefined (length values)) $ fmap sum $ transpose values
   let gamma = binaryToDecimal mostCommonBits
   let epsilon = binaryToDecimal $ fmap invertBit mostCommonBits
-  print("Power Consumption: " ++ (show (gamma * epsilon)))
+  print $ "Power Consumption: " ++ (show $ gamma * epsilon)
   let ox = binaryToDecimal $ closestMatch (mostFrequentBit 1) values
   let co2 = binaryToDecimal $ closestMatch (leastFrequentBit 1) values
-  print("Life Support Rating: " ++ (show (ox * co2)))
+  print $ "Life Support Rating: " ++ (show $ ox * co2)
