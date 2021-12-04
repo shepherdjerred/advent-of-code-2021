@@ -27,3 +27,6 @@ executables:
   Day3:
     main: Main.hs
     source-dirs: Day3
+  Day4:
+    main: Main.hs
+    source-dirs: Day4
