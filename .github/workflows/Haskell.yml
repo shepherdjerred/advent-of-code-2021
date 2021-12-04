@@ -8,7 +8,7 @@ jobs:
           - Day1
           - Day2
           - Day3
-    name: Build Haskell
+    name: Run Haskell Executable
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,8 +18,5 @@ jobs:
           cabal-version: "3.6.0.0"
           enable-stack: true
           stack-version: "2.7.3"
-      - run: stack build
       - name: run ${{ matrix.day }}
         run: stack run ${{ matrix.day }}
-        
-        
