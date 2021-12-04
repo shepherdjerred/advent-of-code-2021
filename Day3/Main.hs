@@ -24,7 +24,7 @@ invertBit bit
   | otherwise = undefined
 
 -- Converts a binary number into its decimal representation, e.g. [1, 0, 0] -> 4
-binaryToDecimal:: [Int] -> Int
+binaryToDecimal :: [Int] -> Int
 binaryToDecimal = binaryToDecimal' 0
 
 binaryToDecimal' :: Int -> [Int] -> Int

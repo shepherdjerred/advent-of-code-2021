@@ -2,4 +2,6 @@
 
 [![Haskell](https://github.com/shepherdjerred/advent-of-code-2021/actions/workflows/Haskell.yml/badge.svg)](https://github.com/shepherdjerred/advent-of-code-2021/actions/workflows/Haskell.yml)
 
-My solutions to Advent of Code 2020 written in Haskell.
+[![Advent of Code Banner](./advent-of-code.jpg))(https://adventofcode.com/2021)
+
+My solutions to Advent of Code 2021 written in Haskell.
