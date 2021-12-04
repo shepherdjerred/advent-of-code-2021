@@ -12,4 +12,4 @@ jobs:
           cabal-version: "3.6.0.0"
           enable-stack: true
           stack-version: "2.7.3"
-      - run: stack build --system-ghc --test --bench --no-run-tests --no-run-benchmarks
+      - run: stack build
