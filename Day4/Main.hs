@@ -63,6 +63,13 @@ firstWinningBoard answers boards
         completedBoards = winningBoards boardsAfterAnswerApplied
         boardsAfterAnswerApplied = fmap (applyAnswer $ head answers) boards
 
+lastWinningBoard :: Answers -> Boards -> (Int, Board)
+lastWinningBoard answers boards
+  | ((length boardsAfterAnswerApplied) == 1) && (checkBoard (head boardsAfterAnswerApplied)) = ((head answers), (head boardsAfterAnswerApplied))
+  | otherwise = lastWinningBoard (tail answers) boardsThatHaventWon
+  where boardsAfterAnswerApplied = fmap (applyAnswer $ head answers) boards
+        boardsThatHaventWon = filter (not . checkBoard) boardsAfterAnswerApplied
+
 prettyRow :: Row -> String
 prettyRow = intercalate " " . fmap (show . num)
 
@@ -80,3 +87,6 @@ main = do
     let (answer, board) = firstWinningBoard (answers input) (boards input)
     let uncalledNumbersSum = sum $ uncalledNumbers board
     print $ answer * uncalledNumbersSum
+    let (lastAnswer, lastBoard) = lastWinningBoard (answers input) (boards input)
+    let uncalledLastNumbersSum = sum $ uncalledNumbers lastBoard
+    print $ lastAnswer * uncalledLastNumbersSum
