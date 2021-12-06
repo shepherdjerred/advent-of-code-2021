@@ -2,7 +2,6 @@ module Main where
 -- Some of this solution was inspired by Bartosz Milewski's solution
 -- See: https://github.com/BartoszMilewski/AoC2021/blob/main/Day4.hs
 
-import Debug.Trace
 import Data.List
 import Data.List.Split
 
@@ -22,17 +21,11 @@ readSpot value = Spot (readInt value) False
 parseAnswers :: String -> Answers
 parseAnswers = fmap readInt . (splitOn ",")
 
-parseBoard :: [String] -> Board
-parseBoard = fmap (fmap readSpot) . fmap words
-
 parseBoards :: [String] -> Boards
-parseBoards = fmap parseBoard . (splitWhen null)
+parseBoards = fmap (fmap (fmap readSpot) . fmap words) . (splitWhen null)
 
 parseInput :: [String] -> Input
 parseInput (first : _ : rest) = Input (parseAnswers first) (parseBoards rest)
-
-winningBoards :: Boards -> Boards
-winningBoards = filter checkBoard
 
 checkBoard :: Board -> Bool
 checkBoard board = (checkBoardHorizontal board) || (checkBoardVertical board)
@@ -56,11 +49,11 @@ applyAnswer answer board = fmap (applyAnswerToRow answer) board
 
 firstWinningBoard :: Answers -> Boards -> (Int, Board)
 firstWinningBoard answers boards
-  | numberOfCompletedBoards > 1 = trace ("Too many completed boards: " ++ (show completedBoards)) undefined
+  | numberOfCompletedBoards > 1 = undefined
   | numberOfCompletedBoards < 1 = firstWinningBoard (tail answers) boardsAfterAnswerApplied
   | numberOfCompletedBoards == 1 = ((head answers), (head completedBoards))
   where numberOfCompletedBoards = length completedBoards
-        completedBoards = winningBoards boardsAfterAnswerApplied
+        completedBoards = filter checkBoard boardsAfterAnswerApplied
         boardsAfterAnswerApplied = fmap (applyAnswer $ head answers) boards
 
 lastWinningBoard :: Answers -> Boards -> (Int, Board)
@@ -69,12 +62,6 @@ lastWinningBoard answers boards
   | otherwise = lastWinningBoard (tail answers) boardsThatHaventWon
   where boardsAfterAnswerApplied = fmap (applyAnswer $ head answers) boards
         boardsThatHaventWon = filter (not . checkBoard) boardsAfterAnswerApplied
-
-prettyRow :: Row -> String
-prettyRow = intercalate " " . fmap (show . num)
-
-prettyBoard :: Board -> String
-prettyBoard = intercalate "\n" . fmap prettyRow
 
 uncalledNumbers :: Board -> [Int]
 uncalledNumbers = fmap num . filter (not . called) . concat
