@@ -13,6 +13,7 @@ description: My solutions to Advent of Code 2021
 
 dependencies:
   - base >= 4.7 && < 5
+  - split
 
 library:
   source-dirs: src
