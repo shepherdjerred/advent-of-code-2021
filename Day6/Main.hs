@@ -15,4 +15,4 @@ main = do
     text <- readFile "resources/Day6.txt"
     let fish = parse text
     let set = fromList fish
-    print $ (iterate simulate set)!!256
+    print $ size $ (iterate simulate set)!!256
