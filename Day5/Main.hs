@@ -12,7 +12,7 @@ type PointMap = Map.Map Point Int
 swap :: Line -> Line
 swap line
   | x1 > x2 = ((Point x2 y2), (Point x1 y1))
-  | y1 > y2 = ((Point x2 y2), (Point x1 y1))
+  | y1 > y2 && x1 == x2 = ((Point x2 y2), (Point x1 y1))
   | otherwise = line
   where ((Point x1 y1), (Point x2 y2)) = line
 
@@ -20,8 +20,17 @@ toPoints :: Line -> [Point]
 toPoints line
   | x1 == x2 = [ (Point x1 y) | y <- [y1..y2] ]
   | y1 == y2 = [ (Point x y1) | x <- [x1..x2] ]
-  | otherwise = trace (show line) []
+  | otherwise = trace (show line) toPointsDiag line
   where ((Point x1 y1), (Point x2 y2)) = line
+
+-- There's definitely a more elegant way to solve this, but I've been stuck on this problem for a bit and just want to be done with it.
+toPointsDiag :: Line -> [Point]
+toPointsDiag line
+  | x1 == x2 && y1 == y2 = [fst line]
+  | isDown = [(Point x1 y1)] ++ (toPointsDiag ((Point (x1 + 1) (y1 - 1), Point x2 y2)))
+  | otherwise = [(Point x1 y1)] ++ (toPointsDiag ((Point (x1 + 1) (y1 + 1), Point x2 y2)))
+  where ((Point x1 y1), (Point x2 y2)) = line
+        isDown = y1 > y2
 
 currentCount :: Point -> PointMap -> Int
 currentCount point map = Map.findWithDefault 0 point map
