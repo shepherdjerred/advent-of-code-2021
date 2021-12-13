@@ -1,26 +1,18 @@
 module Main where
+-- Heavily inspired by https://www.reddit.com/r/haskell/comments/r9z4qb/advent_of_code_2021_day_06/
 
+import Data.MultiSet (MultiSet, size, fromList, concatMap)
 import Data.List.Split
 
-simulateDays :: Int -> [Int] -> [Int]
-simulateDays days fish
-  | days == 0 = fish
-  | otherwise = simulateDays (days - 1) (concat $ fmap simulate fish)
-
-simulate :: Int -> [Int]
-simulate i
-  | i == 0 = [6, 8]
-  | otherwise = [i - 1] 
-
-readInt :: String -> Int
-readInt = read
+simulate :: MultiSet Int -> MultiSet Int
+simulate = Data.MultiSet.concatMap (\x -> if x == 0 then [6, 8] else [x - 1])
 
 parse :: String -> [Int]
-parse input = fmap readInt $ splitOn "," input
+parse input = fmap read $ splitOn "," input
 
 main :: IO ()
 main = do
     text <- readFile "resources/Day6.txt"
     let fish = parse text
-    let end = simulateDays 80 fish
-    print $ length end
+    let set = fromList fish
+    print $ (iterate simulate set)!!256
